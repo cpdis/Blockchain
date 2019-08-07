@@ -142,7 +142,8 @@ node_identifier = str(uuid4()).replace("-", "")
 # Instantiate the Blockchain
 blockchain = Blockchain()
 
-
+# Modify the `mine` endpoint to instead receive and validate or reject a new proof sent by a client.
+# Return a message indicating success or failure. Remember, a valid proof should fail for all senders except the first.
 @app.route("/mine", methods=["GET"])
 def mine():
     # We run the proof of work algorithm to get the next proof...
