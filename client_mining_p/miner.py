@@ -13,7 +13,7 @@ def proof_of_work(last_proof):
 
     proof = 0
 
-    while self.valid_proof(last_proof, proof) is False:
+    while valid_proof(last_proof, proof) is False:
         proof += 1
 
     print("New proof: " + str(proof))
@@ -48,6 +48,7 @@ if __name__ == "__main__":
         node = "http://localhost:5000"
 
     coins_mined = 0
+    
     # Run forever until interrupted
     while True:
         # TODO: Get the last proof from the server and look for a new one
