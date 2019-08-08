@@ -16,6 +16,8 @@ def proof_of_work(last_proof):
     while self.valid_proof(last_proof, proof) is False:
         proof += 1
 
+    print("New proof: " + str(proof))
+
     return proof
 
 
