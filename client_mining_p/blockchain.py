@@ -123,9 +123,13 @@ class Blockchain(object):
             print("\n-------------------\n")
             # Check that the hash of the block is correct
             # TODO: Return false if hash isn't correct
+            if block["previous_hash"] != self.hash(last_block):
+                return False
 
             # Check that the Proof of Work is correct
             # TODO: Return false if proof isn't correct
+            if not self.valid_proof(last_block["proof"], block["proof"]):
+                return False
 
             last_block = block
             current_index += 1
@@ -144,31 +148,30 @@ blockchain = Blockchain()
 
 # Modify the `mine` endpoint to instead receive and validate or reject a new proof sent by a client.
 # Return a message indicating success or failure. Remember, a valid proof should fail for all senders except the first.
-@app.route("/mine", methods=["GET"])
+@app.route("/mine", methods=["POST"])
 def mine():
-    # We run the proof of work algorithm to get the next proof...
-    proof = blockchain.proof_of_work(blockchain.last_block)
+    # # We run the proof of work algorithm to get the next proof...
+    # proof = blockchain.proof_of_work(blockchain.last_block)
 
-    # We must receive a reward for finding the proof.
-    # TODO:
-    # The sender is "0" to signify that this node has mine a new coin
-    # The recipient is the current node, it did the mining!
-    # The amount is 1 coin as a reward for mining the next block
-    blockchain.new_transaction(0, node_identifier, 1)
+    # # We must receive a reward for finding the proof.
+    # # TODO:
+    # # The sender is "0" to signify that this node has mine a new coin
+    # # The recipient is the current node, it did the mining!
+    # # The amount is 1 coin as a reward for mining the next block
+    # blockchain.new_transaction(0, node_identifier, 1)
 
-    # Forge the new Block by adding it to the chain
-    block = blockchain.new_block(proof, blockchain.last_block)
+    # # Forge the new Block by adding it to the chain
+    # block = blockchain.new_block(proof, blockchain.last_block)
 
-    # Send a response with the new block
-    response = {
-        "message": "New Block Forged",
-        "index": block["index"],
-        "transactions": block["transactions"],
-        "proof": block["proof"],
-        "previous_hash": block["previous_hash"],
-    }
-    return jsonify(response), 200
-
+    # # Send a response with the new block
+    # response = {
+    #     "message": "New Block Forged",
+    #     "index": block["index"],
+    #     "transactions": block["transactions"],
+    #     "proof": block["proof"],
+    #     "previous_hash": block["previous_hash"],
+    # }
+    # return jsonify(response), 200
 
 @app.route("/transactions/new", methods=["POST"])
 def new_transaction():
