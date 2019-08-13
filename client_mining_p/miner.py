@@ -48,7 +48,7 @@ if __name__ == "__main__":
         node = "http://localhost:5000"
 
     coins_mined = 0
-    
+
     # Run forever until interrupted
     while True:
         # TODO: Get the last proof from the server and look for a new one
@@ -76,6 +76,8 @@ if __name__ == "__main__":
         # TODO: If the server responds with 'New Block Forged'
         # add 1 to the number of coins mined and print it.  Otherwise,
         # print the message from the server.
-        if r.json()["message"] == "New Block Forged":
+        if data.get("message") == "New Block Forged":
             mined += 1
             print("The total number of Lambda Coins mined is: ", mined)
+        print(data.get("message"))
+
